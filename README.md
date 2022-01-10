@@ -58,5 +58,6 @@ HAHOW_API_TIMEOUT Timeout Seconds while calling hahow assignment API
 }
 ```
 
-這部分因為跟原先在 徵才小專案的 API Schema 並沒有寫到，而且也跟一般的 4xx 或 5xx 系列的 HTTP Status Code 不太一樣，需要特別檢查，並且回傳 HTTP Status Code 503，表示 API 背後的串接的服務或資料庫目前沒辦法得到結果。
-另外針對 Hahow Heroes API 的部分，Response 的 JSON 是 array 的話，資安部分相對是不安全的，請參考下面連結: <br> http://haacked.com/archive/2008/11/20/anatomy-of-a-subtle-json-vulnerability.aspx/
+這部分因為跟原先在 徵才小專案的 API Schema 並沒有寫到，而且也跟一般的 4xx 或 5xx 系列的 HTTP Status Code 不太一樣，需要特別檢查，並且回傳 HTTP Status Code 503，表示 API 背後的串接的服務或資料庫目前沒辦法得到結果。<br>
+另外針對 Hahow Heroes API 的部分，Response 的 JSON 是 array 的話，資安部分相對是不安全的，請參考下面連<br>
+http://haacked.com/archive/2008/11/20/anatomy-of-a-subtle-json-vulnerability.aspx/
