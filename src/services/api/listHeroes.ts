@@ -15,6 +15,7 @@ export default async (): Promise<{
 		});
 		heroes = response.data;
 	} catch (error) {
+		// check if the error is from Axios
 		const axiosError = error as AxiosError;
 		if (!axiosError?.isAxiosError) {
 			throw error;

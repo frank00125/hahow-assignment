@@ -13,6 +13,7 @@ export default async (heroId: string): Promise<Hero | null> => {
 		});
 		hero = response.data;
 	} catch (error) {
+		// check if the error is from Axios
 		const axiosError = error as AxiosError;
 		if (!axiosError?.isAxiosError) {
 			throw error;
@@ -21,6 +22,7 @@ export default async (heroId: string): Promise<Hero | null> => {
 		console.error('[ERROR] Hahow API Calling Error ', error);
 	}
 
+	// check if the hero info with given id is ok to use
 	if (!hero?.id) {
 		throw new Error(JSON.stringify(hero));
 	}

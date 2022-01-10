@@ -28,6 +28,7 @@ export default async ({
 		);
 		authenticateStatus = true;
 	} catch (error: any) {
+		// check if the error is from Axios
 		const axiosError = error as AxiosError;
 		if (!axiosError?.isAxiosError) {
 			throw error;
