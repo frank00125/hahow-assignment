@@ -9,7 +9,6 @@ export default async (req: Request, res: Response) => {
 
 	// check request
 	const { heroId } = req.params;
-	console.log({ heroId });
 	if (!heroId) {
 		res.status(400).json({
 			errorCode: ErrorCode.INVALID_FIELDS,
@@ -24,7 +23,6 @@ export default async (req: Request, res: Response) => {
 			? [singleHero(heroId), heroProfile(heroId)]
 			: [singleHero(heroId)]
 	);
-
 	if (
 		heroResponse.status === 'rejected' ||
 		(isAuthenticated && heroProfileResponse?.status === 'rejected')
@@ -41,7 +39,6 @@ export default async (req: Request, res: Response) => {
 		});
 		return;
 	}
-
 	const hero = heroResponse.status === 'fulfilled' ? heroResponse.value : null;
 	const profile =
 		heroProfileResponse?.status === 'fulfilled'

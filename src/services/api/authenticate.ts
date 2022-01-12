@@ -1,4 +1,5 @@
-import { AxiosError } from 'axios';
+import axios from 'axios';
+import { ErrorCode } from '../../types';
 import hahowApiInstance from './apiInstance';
 
 type AuthenticateApiInput = {
@@ -28,13 +29,7 @@ export default async ({
 		);
 		authenticateStatus = true;
 	} catch (error: any) {
-		// check if the error is from Axios
-		const axiosError = error as AxiosError;
-		if (!axiosError?.isAxiosError) {
-			throw error;
-		}
-
-		console.error('[ERROR] Hahow API Calling Error ', error);
+		console.error('[ERROR] Hahow API Calling Error at Authenticate API', error);
 	}
 
 	return {

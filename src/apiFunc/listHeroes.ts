@@ -1,13 +1,36 @@
 import { Request, Response } from 'express';
 import heroProfile from '../services/api/heroProfile';
 import listHeroes from '../services/api/listHeroes';
+import { ErrorCode, Hero } from '../types';
 
 export default async (req: Request, res: Response) => {
 	// get authentication result
 	const { isAuthenticated = false } = res.locals;
 
 	// get heroes
-	const { heroes = [] } = await listHeroes();
+	let heroes: Hero[];
+	try {
+		const heroesResponse = await listHeroes();
+		heroes = heroesResponse.heroes;
+	} catch (error: any) {
+		const {
+			code = ErrorCode.INTERNAL_SERVER_ERROR,
+			info = 'Internal Server Error',
+		} = JSON.parse(error?.message || '{}');
+
+		let statusCode: number = 500;
+		switch (code) {
+			case ErrorCode.SERVICE_UNAVAILABLE:
+				statusCode = 503;
+				break;
+		}
+
+		res.status(statusCode).json({
+			errorCode: code,
+			info: info,
+		});
+		return;
+	}
 
 	// authenticated => get profile for each hero
 	if (isAuthenticated) {

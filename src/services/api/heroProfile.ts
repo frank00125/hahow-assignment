@@ -1,5 +1,5 @@
-import { AxiosError } from 'axios';
-import { HeroProfile } from '../../types';
+import axios from 'axios';
+import { ErrorCode, HeroProfile } from '../../types';
 import hahowApiInstance from './apiInstance';
 
 export default async (heroId: string): Promise<HeroProfile | null> => {
@@ -16,14 +16,16 @@ export default async (heroId: string): Promise<HeroProfile | null> => {
 		);
 		heroProfile = response.data;
 	} catch (error) {
-		// check if the error is from Axios
-		const axiosError = error as AxiosError;
-		if (!axiosError?.isAxiosError) {
-			throw error;
-		}
+		console.error('[ERROR] Hahow API Calling Error at Hero Profile API', error);
 
-		console.error('[ERROR] Hahow API Calling Error ', error);
+		throw new Error(
+			axios.isAxiosError(error)
+				? JSON.stringify({
+						code: ErrorCode.SERVICE_UNAVAILABLE,
+						info: error,
+				  })
+				: ''
+		);
 	}
-
 	return heroProfile;
 };

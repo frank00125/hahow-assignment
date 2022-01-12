@@ -12,18 +12,12 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 	}
 
 	// check if the user is authenticated
-	let isAuthenticated: boolean = false;
-	try {
-		const { authenticateStatus: apiAuthenticateStatus } = await authenticate({
-			name,
-			password,
-		});
-		isAuthenticated = apiAuthenticateStatus;
-	} catch (error) {
-		console.error('[ERROR] HAHOW API CALLING ERROR', error);
-	}
+	const { authenticateStatus } = await authenticate({
+		name,
+		password,
+	});
 
 	// pass authentication result
-	res.locals.isAuthenticated = isAuthenticated;
+	res.locals.isAuthenticated = authenticateStatus;
 	next();
 };
